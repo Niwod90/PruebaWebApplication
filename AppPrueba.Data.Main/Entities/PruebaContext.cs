@@ -9,6 +9,9 @@ namespace AppPrueba.Data.Main.Entities
         public PruebaContext()
         {
         }
+        public PruebaContext(DbContextOptions<PruebaContext> options) : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

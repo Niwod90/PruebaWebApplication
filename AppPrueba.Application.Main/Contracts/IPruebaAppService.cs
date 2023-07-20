@@ -5,6 +5,10 @@ namespace AppPrueba.Application.Main.Contracts
 {
     public interface IPruebaAppService
     {
+        PruebaModel GetFirstUsers();
+
         IEnumerable<PruebaModel> GetPrueba();
+
+        Task<IEnumerable<PruebaModel>> GetPruebaAsync();
     }
 }

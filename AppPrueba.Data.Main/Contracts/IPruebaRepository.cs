@@ -5,6 +5,10 @@ namespace AppPrueba.Data.Main.Contracts
 {
     public interface IPruebaRepository
     {
+        UsersEntity GetFirstUsers();
+
         IEnumerable<UsersEntity> GetUsers();
+
+        Task<IEnumerable<UsersEntity>> GetUsersAll();
     }
 }

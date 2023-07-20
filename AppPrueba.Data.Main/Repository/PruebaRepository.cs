@@ -1,19 +1,20 @@
-﻿using System.Data;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using AppPrueba.Data.Main.Contracts;
+﻿using AppPrueba.Data.Main.Contracts;
 using AppPrueba.Data.Main.Entities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace AppPrueba.Data.Main
 {
     public class PruebaRepository : IPruebaRepository
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = "Server=(localdb)\\myServerBBDD;Database=mytasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
 
-        public PruebaRepository(IConfiguration configuration)
+        private readonly PruebaContext _dbContext;
+
+        public PruebaRepository(IConfiguration configuration, PruebaContext dbContext)
         {
-            _connectionString = "Server=(localdb)\\myServerBBDD;Database=mytasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+            _dbContext = dbContext;
         }
 
         public UsersEntity GetFirstUsers()
@@ -56,6 +57,13 @@ namespace AppPrueba.Data.Main
             }
 
             return users.ToArray();
+        }
+
+        public async Task<IEnumerable<UsersEntity>> GetUsersAll()
+        {
+            IQueryable<UsersEntity> res = _dbContext.Users;
+
+            return await res.ToListAsync();
         }
     }
 }

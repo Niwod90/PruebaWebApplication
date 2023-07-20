@@ -3,6 +3,8 @@ using AppPrueba.Application.Main;
 using AppPrueba.Application.Main.Contracts;
 using AppPrueba.Data.Main;
 using AppPrueba.Data.Main.Contracts;
+using AppPrueba.Data.Main.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPrueba.API.Main
 {
@@ -20,8 +22,12 @@ namespace AppPrueba.API.Main
             services.AddControllers();
 
             services.AddScoped<IPruebaAppService, PruebaAppService>();
-            services.AddScoped<IPruebaRepository, PruebaRepository>();
             services.AddScoped<PruebaController>();
+
+            services.AddDbContext<PruebaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            ////services.AddScoped<IPruebaRepository, PruebaRepository>();
+            services.AddTransient<IPruebaRepository, PruebaRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
